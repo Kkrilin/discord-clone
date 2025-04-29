@@ -9,7 +9,7 @@ export default function (sequelize, DataTypes) {
       },
       userName: {
         type: DataTypes.STRING,
-        unique: true,
+        // unique: true,
         allowNull: false,
       },
       email: {
@@ -37,6 +37,7 @@ export default function (sequelize, DataTypes) {
 
   User.associate = (models) => {
     User.hasMany(models.Server, { foreignKey: 'ownerId', as: 'Owner' });
+    User.hasMany(models.Message, { foreignKey: 'userId' });
   };
 
   return User;

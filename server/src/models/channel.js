@@ -18,6 +18,7 @@ export default function (sequelize, DataTypes) {
   Channel.associate = (models) => {
     // Channel.belongsTo(models.User, { foreignKey: 'userId', as: 'Owner' });
     Channel.belongsTo(models.Channel, { foreignKey: 'serverId' });
+    Channel.hasMany(models.Message, { foreignKey: 'channelId' });
   };
 
   return Channel;

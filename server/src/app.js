@@ -4,7 +4,13 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import { logger, transport } from './helper/logger.js';
+import { Server } from 'socket.io';
 import db from './models/index.js';
+
+import { createServer } from 'node:http';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
 // import router
 import userRouter from './routes/users.js';
 // import  middleware
@@ -13,6 +19,10 @@ import { authenticate } from './middleware/userAuth.js';
 
 const app = express();
 const port = config.serverPort || 3000;
+const server = createServer(app);
+const io = new Server(server, {
+  connectionStateRecovery: {},
+});
 
 // Handle errors in the transport
 transport.on('error', (error) => {
@@ -43,9 +53,6 @@ app.use(cors());
 app.use(express.static('public'));
 
 // check server is running
-app.use('/running', (req, res) => {
-  res.status(200).send('<h1>server is running</h1>');
-});
 
 // user router
 app.use('/auth', userRouter);
@@ -56,6 +63,11 @@ app.use('/auth', userRouter);
 // app.use('/api/availabilities', availabilityRouter);
 // app.use('/api/bookings', bookingRouter);
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'index.html'));
+});
 // Middleware to handle "route not found" errors and log them
 app.use((req, res, next) => {
   const errorMessage = `Route not found: ${req.method} ${req.originalUrl}`;
@@ -66,6 +78,12 @@ app.use((req, res, next) => {
 // Middleware to handle all other errors and log them
 app.use(errorHandler);
 
-app.listen(port, () => {
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+
+server.listen(port, () => {
   logger.info(`server is running on ${port}`);
 });

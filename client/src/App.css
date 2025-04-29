@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "ABC Ginto Normal";
+  src: url("./assets/fonts/ABCGintoNord-Light-Trial-BF651b7b72913b5.woff")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: "ABC Ginto Normal";
+  src: url("./assets/fonts/ABCGintoNord-Bold-Trial-BF651b7b71a7e37.woff")
+    format("woff2");
+  font-weight: bold;
+  font-style: bold;
+} */
+* {
+  /* margin: 0; */
+  /* padding: 0; */
+  box-sizing: border-box;
+}
+
+body {
+  background-image: linear-gradient(120deg, black, #1a2081);
+  height: 100vh;
+  /* font-family: "ABC Ginto Normal", sans-serif; */
+  color: #fff;
+}
+
+.nav-link li {
+  padding: 0.625rem 1rem;
+  text-transform: capitalize;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-weight: 800;
+}
+
+.nav-link li:hover {
+  background-color: #5865f2;
+  border-radius: 1rem;
+}

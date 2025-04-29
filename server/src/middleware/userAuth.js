@@ -4,11 +4,11 @@ import config from '../../config/config.js';
 import bycrypt from 'bcrypt';
 // validate register request
 export const validateSignUp = async (req, re, next) => {
-  const { name, email, password } = req.body;
+  const { userName, email, password } = req.body;
 
   try {
-    if (!name || !email || !password) {
-      throw new Error(`please send ${!name || !email || !password}`);
+    if (!userName || !email || !password) {
+      throw new Error(`please send ${!userName || !email || !password}`);
     }
     // const userByName = await UserController.findOneByName(name);
     // if (userByName) {
@@ -19,6 +19,7 @@ export const validateSignUp = async (req, re, next) => {
     if (user) {
       throw new Error('Invalid request: userEmail is already in use');
     }
+    console.log('password', password);
     req.body.password = await bycrypt.hash(password, 10);
     next();
   } catch (error) {
@@ -46,7 +47,7 @@ export const validateLogin = async (req, res, next) => {
 export const authenticate = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
-
+  // const token = req.cookies.jwt;
   try {
     if (!token) {
       throw new Error('user authentication falied');

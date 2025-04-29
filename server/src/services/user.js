@@ -1,16 +1,10 @@
 import UserController from '../controllers/user.js';
-import config from '../../config/config.js';
+import config from '../config/config.js';
 import jwt from 'jsonwebtoken';
 import bycrypt from 'bcrypt';
-import utils from '../helper/utils.js';
 
 export const registerUser = async function (req, res, next) {
   const values = req.body;
-
-  const baseProfileSlug = utils.slugify(values.email.split('@')[0]);
-  const profileSlug = await utils.uniqueProfileSlug(baseProfileSlug);
-  values.profileSlug = profileSlug;
-
   try {
     const user = await UserController.registerUser(values);
     if (user) {
@@ -20,7 +14,7 @@ export const registerUser = async function (req, res, next) {
       //   res.cookie('jwt', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
       res.status(201).json({
         success: 1,
-        userData: { id: user.id, name: user.name, email: user.email },
+        userData: { id: user.id, name: user.userName, email: user.email },
         token,
       });
     } else {
@@ -46,9 +40,10 @@ export const login = async function (req, res, next) {
         //   maxAge: 24 * 60 * 60 * 1000,
         //   httpOnly: true,
         // });
+        delete user.password;
         return res.status(200).json({
           success: 1,
-          userData: { id: user.id, name: user.name, email: user.email },
+          userData: user,
           token,
         });
       } else {
