@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 // black logo
 // https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/67ed8194f41d7d8eade32c90_Logo.svg
 
@@ -16,12 +17,12 @@ function Header() {
                             <li>download</li>
                             <li>nitro</li>
                             <li>discover</li>
-                            <li>safety</li>
-                            <li>quests</li>
-                            <li>support</li>
-                            <li>blog</li>
-                            <li>developers</li>
-                            <li>carrers</li>
+                            <NavLinkWithDetail text="safety" />
+                            <NavLinkWithDetail text="quests" />
+                            <NavLinkWithDetail text="support" />
+                            <NavLinkWithDetail text="blog" />
+                            <NavLinkWithDetail text="developers" />
+                            <li>careers</li>
                         </ul>
                     </div>
                     <div>
@@ -30,6 +31,28 @@ function Header() {
                 </div>
             </div>
         </header>
+    )
+}
+
+interface NavLinkWithDetailProps {
+    text: string
+}
+
+function NavLinkWithDetail({ text }: NavLinkWithDetailProps) {
+    const [isHover, setIsHover] = useState('')
+    const handleMouseEnter = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        e.preventDefault()
+        setIsHover('enter')
+    }
+    const handleMouseLeave = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        e.preventDefault()
+        setIsHover('leave')
+    }
+    return (
+        <li onMouseEnter={(e) => handleMouseEnter(e)} onMouseLeave={(e) => handleMouseLeave(e)}>
+            {text}
+            <KeyboardArrowDownIcon className={`${isHover === 'enter' ? 'arrowUp' : isHover === 'leave' ? 'arrowDown' : 'arrow'}`} />
+        </li>
     )
 }
 
