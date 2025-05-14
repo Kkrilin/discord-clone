@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 // import router
-import userRouter from './routes/users.js';
+import authRouter from './routes/auth.js';
 // import  middleware
 import errorHandler from './middleware/errorHandlers.js';
 import { authenticate } from './middleware/userAuth.js';
@@ -49,19 +49,13 @@ const corsOptions = {
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 
 // check server is running
 
 // user router
-app.use('/auth', userRouter);
-// app.use('/api/*', authenticate);
-// procted route
-// app.use('/api/users', userRouter);
-// app.use('/api/event-types', eventTypeRouter);
-// app.use('/api/availabilities', availabilityRouter);
-// app.use('/api/bookings', bookingRouter);
+app.use('/auth', authRouter);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

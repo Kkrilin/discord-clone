@@ -11,7 +11,7 @@ export const registerUser = async function (req, res, next) {
       const token = jwt.sign({ id: user.id }, config.secretKey, {
         expiresIn: config.jwtExpiration,
       });
-      //   res.cookie('jwt', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
+      res.cookie('jwt', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
       res.status(201).json({
         success: 1,
         userData: { id: user.id, name: user.userName, email: user.email },

@@ -66,6 +66,18 @@ body {
   color: rgb(144, 144, 144);
 }
 
+input {
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #28292e;
+}
+
+input:focus {
+  border-color: #4f46e5;
+}
+
 .arrowUp {
   animation: rotateUp 0.2s ease-in-out forwards;
   color: white;
@@ -76,7 +88,37 @@ body {
 
 .arrowDown {
   animation: rotateDown 0.2s ease-in-out forwards;
-  color: white;
+  color: grey;
+}
+label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.red_strike {
+  position: relative;
+  width: max-content;
+}
+.red_strike::after {
+  content: "*";
+  color: rgb(200, 72, 72);
+  position: absolute;
+  /* font-size: 2px; */
+  top: -3px;
+  right: -8px;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 16px;
+  margin-top: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 16px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 @keyframes rotateUp {

@@ -31,6 +31,10 @@ export default function (sequelize, DataTypes) {
         // unique: true,
         // allowNull: false,
       },
+      dateOfBirth: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
     {},
   );
