@@ -13,6 +13,8 @@ import { dirname, join } from 'node:path';
 
 // import router
 import authRouter from './routes/auth.js';
+import userRouter from './routes/user.js';
+import friendRequestRouter from './routes/friendRequest.js';
 // import  middleware
 import errorHandler from './middleware/errorHandlers.js';
 import { authenticate } from './middleware/userAuth.js';
@@ -56,7 +58,9 @@ app.use(express.static('public'));
 
 // user router
 app.use('/auth', authRouter);
-app.use('/api/*', authenticate);
+app.use('/api', authenticate);
+app.use('/api/user', userRouter);
+app.use('/api/friend-request', friendRequestRouter);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

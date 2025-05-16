@@ -4,8 +4,15 @@ import Servers from '../components/Server/Servers';
 import DirectMessage from '../components/Channel/DirectMessage';
 import DirectMessagePage from '../components/Channel/DirectMessagePage';
 import ProfileBar from '../components/Profile/ProfileBar';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
+    const [profileDate, setProfileData] = useState({})
+
+    useEffect(() =>{
+
+    },[])
+
     return (
         <div className="h-lvh">
             <div

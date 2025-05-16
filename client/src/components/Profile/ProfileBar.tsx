@@ -1,11 +1,14 @@
+import { useSelector } from "react-redux"
 import { Avatar, IconButton } from "@mui/material"
-import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import HeadsetIcon from '@mui/icons-material/Headset';
 import SettingsIcon from '@mui/icons-material/Settings';
 import discordImg from '../../assets/Discord-Symbol-White.svg'
+import { RootState } from "../../redux/store";
 
 export default function ProfileBar() {
+    const profileData = useSelector((state: RootState) => state.profile)
+
     return (
         <div className="absolute bottom-2 left-2">
             <div className="flex p-2 rounded-md" style={{
@@ -24,8 +27,8 @@ export default function ProfileBar() {
                         }} src={discordImg} />
                     </div>
                     <div>
-                        <h1>kundan</h1>
-                        <h1 className="text-sm">Invinsible</h1>
+                        <h1>{profileData.displayName}</h1>
+                        <h1 className="text-sm">{profileData.userName}</h1>
                     </div>
                 </div>
                 <div className="flex justify-center items-center">

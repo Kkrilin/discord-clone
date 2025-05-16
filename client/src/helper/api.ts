@@ -17,6 +17,17 @@ export const getRequestConfig = (): AxiosRequestConfig => {
     },
   };
 };
+
+// public route
 export const authBaseUrl = `${serverBaseUrl}/auth`;
 export const userRegisterUrl = `${authBaseUrl}/signup`;
 export const userLoginUrl = `${authBaseUrl}/login`;
+
+// protected route
+export const protectedBaseUrl = `${serverBaseUrl}/api`;
+
+// user
+export const userBaseUrl = `${protectedBaseUrl}/user`;
+
+// friend request
+export const sendFriendRequestUrl = `${protectedBaseUrl}/friend-request`;

@@ -1,6 +1,6 @@
 import UserController from '../controllers/user.js';
 import jwt from 'jsonwebtoken';
-import config from '../../config/config.js';
+import config from '../config/config.js';
 import bycrypt from 'bcrypt';
 // validate register request
 export const validateSignUp = async (req, re, next) => {
@@ -10,11 +10,10 @@ export const validateSignUp = async (req, re, next) => {
     if (!userName || !email || !password) {
       throw new Error(`please send ${!userName || !email || !password}`);
     }
-    // const userByName = await UserController.findOneByName(name);
-    // if (userByName) {
-    //   throw new Error('Invalid request: userName is already in use');
-    // }
-
+    const userByName = await UserController.findOneByName(name);
+    if (userByName) {
+      throw new Error('Invalid request: userName is already in use');
+    }
     const user = await UserController.findOneByEmail(email);
     if (user) {
       throw new Error('Invalid request: userEmail is already in use');

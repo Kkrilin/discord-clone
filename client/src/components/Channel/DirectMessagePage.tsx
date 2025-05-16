@@ -5,6 +5,7 @@ import Friends from './Friends';
 import { useState } from 'react';
 import Addfriend from './Addfriend';
 import { lightBlue } from '@mui/material/colors';
+import PendingRequest from './PendingRequest';
 
 
 
@@ -24,7 +25,7 @@ export default function DirectMessagePage() {
                     <div className='flex justify-between items-center py-2 px-8'>
                         <div className='flex gap-2 items-center'>
                             <h1 className='flex items-center gap-3'> <GroupIcon /> Friends <span className='text-gray-600'>&#8226;</span></h1>
-                            <div className='flex items-center gap-3'>
+                            <div className='action_button flex items-center gap-3'>
                                 <button
                                     className='rounded-md'
                                     onClick={() => setAction('online')}
@@ -33,6 +34,14 @@ export default function DirectMessagePage() {
                                         backgroundColor: action === 'online' ? "#29292D" : ''
                                     }}
                                 >Online</button>
+                                <button
+                                    className='rounded-md'
+                                    onClick={() => setAction('pending')}
+                                    style={{
+                                        padding: "4px 10px",
+                                        backgroundColor: action === 'pending' ? "#29292D" : ''
+                                    }}
+                                >Pending</button>
                                 <button
                                     onClick={() => setAction('all')}
                                     className='rounded-md'
@@ -62,6 +71,7 @@ export default function DirectMessagePage() {
                 }} className='flex'>
                     {action === 'addFriend' && < Addfriend />}
                     {['all', 'online'].includes(action) && <Friends />}
+                    {action === 'pending' && <PendingRequest />}
                     <div
                         style={{
                             backgroundColor: "#202024",

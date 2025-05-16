@@ -1,11 +1,13 @@
 import { Avatar } from '@mui/material'
-import MessageIcon from '@mui/icons-material/Message';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
-export default function FriendCard() {
+
+type Props = {
+    type: string
+}
+
+export default function RequestCard({ type, sender, receive }: Props) {
     return (
         <div>
             <div
@@ -23,14 +25,14 @@ export default function FriendCard() {
                     <div className='flex items-center gap-3'>
                         <Avatar />
                         <div>
-                            <h1>name</h1>
-                            <h1>Offline</h1>
+                            <h1>{type === 'recieve' ? sender.userName : receive.userName}</h1>
+                            <h1>{type === 'recieve' ? sender.displayName : receive.displayName}</h1>
                         </div>
                     </div>
                     <div>
                         <div className='flex items-center gap-2'>
-                            <MessageIcon />
-                            <MoreVertIcon />
+                            {type === 'recieve' && <DoneIcon />}
+                            <ClearIcon />
                         </div>
                     </div>
                 </div>

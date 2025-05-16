@@ -186,6 +186,14 @@ label {
 .friend_card:hover {
   background-color: #242428;
 }
+.action_button  button{
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out ;
+}
+
+.action_button button:hover {
+  background-color: #29292d;
+}
 
 @keyframes show {
   from {

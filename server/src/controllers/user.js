@@ -5,10 +5,10 @@ import db from '../models/index.js';
 const UserController = {};
 
 //  find user by name
-UserController.findOneByName = (name) => {
+UserController.findOneByName = (userName) => {
   const filter = {
     where: {
-      name,
+      userName,
     },
   };
 
@@ -21,8 +21,8 @@ UserController.findOneById = (id, options = {}) => {
     where: {
       id,
     },
+    attributes: { exclude: ['password'] },
   };
-
   return db.User.findOne(filter);
 };
 

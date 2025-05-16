@@ -10,6 +10,7 @@ export default function (sequelize, DataTypes) {
       status: {
         type: DataTypes.ENUM,
         allowNull: false,
+        defaultValue: 'pending',
         values: ['pending', 'accepted', 'rejected'],
       },
     },
