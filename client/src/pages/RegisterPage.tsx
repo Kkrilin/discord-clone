@@ -29,6 +29,7 @@ function RegisterPage() {
     const [password, setPasword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
+
     const payload: RegisterUserPayload = useMemo(() => {
         return {
             email,
@@ -48,9 +49,10 @@ function RegisterPage() {
                 payload.dateOfBirth = dob.toISOString()
             }
             axios.post(userRegisterUrl, payload, requestConfig).then((res) => {
+                localStorage.setItem('token', res.data.token)
+                navigate('/app')
                 console.log(res.data)
             }).catch(err => {
-                navigate('/app')
                 toast.error(err.message)
             })
         } catch (error: unknown) {

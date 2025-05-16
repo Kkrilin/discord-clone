@@ -16,8 +16,8 @@ export default function SearchToAddFriend() {
                     width: "100%",
                     height: '50px',
                 }}
+                autoFocus
                 placeholder='You can add friends with thier Discord username.' type="search" name="" id="" />
-
             {<Button
                 style={{
                     fontSize: '10px',

@@ -56,6 +56,7 @@ app.use(express.static('public'));
 
 // user router
 app.use('/auth', authRouter);
+app.use('/api/*', authenticate);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

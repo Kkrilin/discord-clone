@@ -18,7 +18,7 @@ export default function FIlterSearch() {
                 }}
                 // className='search'
                 placeholder='Search' type="search" name="" id="" />
-            {search && <ClearIcon className='animate serch_input absolute right-8 text-gray-500' />}
+            {search && <ClearIcon onClick={() => setSearch('')} className='animate serch_input absolute right-8 text-gray-500' />}
             {!search && <SearchIcon className=' animate serch_input absolute right-8 text-gray-500' />
             }
         </div>

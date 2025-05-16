@@ -6,6 +6,7 @@ export const requestConfig: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 };
 
 export const getRequestConfig = (): AxiosRequestConfig => {

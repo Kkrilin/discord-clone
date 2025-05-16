@@ -9,7 +9,7 @@ export default function (sequelize, DataTypes) {
       },
       userName: {
         type: DataTypes.STRING,
-        // unique: true,
+        unique: true,
         allowNull: false,
       },
       email: {
@@ -28,8 +28,6 @@ export default function (sequelize, DataTypes) {
       },
       avatarUrl: {
         type: DataTypes.STRING,
-        // unique: true,
-        // allowNull: false,
       },
       dateOfBirth: {
         type: DataTypes.DATE,
@@ -42,7 +40,8 @@ export default function (sequelize, DataTypes) {
   User.associate = (models) => {
     User.hasMany(models.Server, { foreignKey: 'ownerId', as: 'Owner' });
     User.hasMany(models.Message, { foreignKey: 'userId' });
+    User.hasMany(models.FriendRequest, { foreignKey: 'senderId', as: 'Sender' });
+    User.hasMany(models.FriendRequest, { foreignKey: 'receiverId', as: 'Receiver' });
   };
-
   return User;
 }

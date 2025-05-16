@@ -3,10 +3,11 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import Servers from '../components/Server/Servers';
 import DirectMessage from '../components/Channel/DirectMessage';
 import DirectMessagePage from '../components/Channel/DirectMessagePage';
+import ProfileBar from '../components/Profile/ProfileBar';
 
 export default function HomePage() {
     return (
-        <div className=" h-lvh">
+        <div className="h-lvh">
             <div
                 style={{
                     backgroundColor: "#121214",
@@ -28,7 +29,7 @@ export default function HomePage() {
             </div>
             <div
                 style={{ backgroundColor: "#1A1A1E", height: "96vh" }}
-                className='flex '
+                className='flex  relative'
             >
                 <Servers />
                 <div
@@ -44,6 +45,7 @@ export default function HomePage() {
                     <DirectMessage />
                     <DirectMessagePage />
                 </div>
+                <ProfileBar />
             </div>
         </div>
     )

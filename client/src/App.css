@@ -91,6 +91,10 @@ input[type="search"] {
   /* transition: border-color 0.3s ease; */
 }
 
+.add_friend > input[type="search"]::placeholder {
+  font-size: 0.875rem;
+}
+
 input[type="search"]:focus {
   border-color: #4f46e5;
 }
@@ -156,6 +160,16 @@ label {
   cursor: pointer;
   color: #929292;
 }
+
+.profile_icon {
+  color: #929292 !important;
+}
+
+.profile_icon:hover {
+  background-color: rgb(28, 27, 27) !important;
+  color: white !important;
+}
+
 .navbar h1:hover {
   background-color: rgb(28, 27, 27);
   color: white;

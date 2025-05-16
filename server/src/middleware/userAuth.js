@@ -45,9 +45,9 @@ export const validateLogin = async (req, res, next) => {
 
 // authenticate protected routes
 export const authenticate = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
-  // const token = req.cookies.jwt;
+  // const authHeader = req.headers['authorization'];
+  // const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
+  const token = req.cookies.jwt;
   try {
     if (!token) {
       throw new Error('user authentication falied');
