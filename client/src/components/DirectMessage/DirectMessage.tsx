@@ -1,6 +1,8 @@
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import VideocamIcon from '@mui/icons-material/Videocam';
-import { Pin, UserPlus, UserRound } from 'lucide-react';
+import { Pin, UserPlus, UserRound, UserRoundCheck } from 'lucide-react';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton, { Button } from '@mui/material';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
 import Search from '../Channel/Search';
@@ -57,11 +59,8 @@ export default function DirectMessage() {
                     </div>
                 </div>
                 <div style={{ flex: "1" }} className='flex'>
-                    <div className='flex justify-end  flex-col' style={{
-                        flex: "1", height: "80vh",
-                        overflowY: "auto"
-                    }}>
-                        <div >
+                    <div className='flex justify-end flex-col' style={{ flex: "1" }}>
+                        <div className='message_scroll' style={{ maxHeight: "79vh", overflowY: "auto" }} >
                             <div className='px-4'>
                                 <div className='flex flex-col gap-3'>
                                     <Avatar sx={{ width: "80px", height: "80px", backgroundColor: "pink" }} />
@@ -97,7 +96,7 @@ export default function DirectMessage() {
                                 </div>
                             </div>
                             {messages.length > 0 &&
-                                <ul className='overflow-y-auto'>
+                                <ul className='px-5'>
                                     {messages.map((msg) => <li>{msg}</li>)}
                                 </ul>
                             }
