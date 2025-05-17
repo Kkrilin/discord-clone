@@ -10,7 +10,8 @@ export default function DirectMessageLeftList() {
             style={{
                 fontSize: "13px",
                 backgroundColor: "#121214",
-                height: "100%"
+                height: "100%",
+                borderTopLeftRadius: "10px",
             }}
         >
             <div

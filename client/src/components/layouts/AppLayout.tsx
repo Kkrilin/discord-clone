@@ -39,7 +39,8 @@ export default function AppLayout() {
                         borderTop: "1px solid rgb(49, 49, 53)",
                         flex: "1",
                         height: "100%",
-                        borderRadius: "10px"
+                        borderTopLeftRadius: "10px",
+                        overflow: 'hidden'
                     }}
                     className='flex'>
                     <Outlet />

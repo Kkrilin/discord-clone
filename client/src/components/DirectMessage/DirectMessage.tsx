@@ -1,8 +1,6 @@
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import VideocamIcon from '@mui/icons-material/Videocam';
-import { Pin, UserPlus, UserRound, UserRoundCheck } from 'lucide-react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton, { Button } from '@mui/material';
+import { Pin, UserPlus, UserRound } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
 import Search from '../Channel/Search';
@@ -14,8 +12,20 @@ import MessageInput from '../Message/MessageInput';
 
 export default function DirectMessage() {
     const [showProfile, setShowProfile] = useState(true)
+    const [messages, setMessages] = useState<string[]>([])
+    const [messageText, setMessageText] = useState('')
     const location = useLocation()
     const friendData = location.state?.friendData
+
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            setMessages(prv => [...prv, messageText])
+            setMessageText('')
+        }
+    }
+
     return (
         <div style={{
             flex: "1",
@@ -46,18 +56,21 @@ export default function DirectMessage() {
                         </div>
                     </div>
                 </div>
-                <div style={{
-                    flex: "1",
-                }} className='flex'>
-                    <div className='flex items-end' style={{ flex: "1" }}>
-                        <div>
-                            <div className=' px-4'>
-                                <div className='flex flex-col '>
+                <div style={{ flex: "1" }} className='flex'>
+                    <div className='flex justify-end  flex-col' style={{
+                        flex: "1", height: "80vh",
+                        overflowY: "auto"
+                    }}>
+                        <div >
+                            <div className='px-4'>
+                                <div className='flex flex-col gap-3'>
                                     <Avatar sx={{ width: "80px", height: "80px", backgroundColor: "pink" }} />
-                                    <h1 className='text-2xl font-bold'>{friendData.displayName}</h1>
-                                    <h1 className='text-sm'>{friendData.userName}</h1>
+                                    <div className='flex flex-col gap-3.5'>
+                                        <h1 className='text-4xl capitalize font-bold'>{friendData.displayName}</h1>
+                                        <h1 className='text-2xl'>{friendData.userName}</h1>
+                                    </div>
                                 </div>
-                                <p>this is the beginning of your direct message history with <strong>{friendData.displayName}</strong>  </p>
+                                <p className='py-5'>this is the beginning of your direct message history with <strong>{friendData.displayName}</strong>  </p>
                                 <div className='flex items-center'>
                                     <div className='flex items-center'>
                                         <h1 className='flex items-center text-sm text-neutral-400'> 1 Mutual Server</h1>
@@ -83,8 +96,13 @@ export default function DirectMessage() {
                                     >Block</button>
                                 </div>
                             </div>
+                            {messages.length > 0 &&
+                                <ul className='overflow-y-auto'>
+                                    {messages.map((msg) => <li>{msg}</li>)}
+                                </ul>
+                            }
                         </div>
-                        {/* <MessageInput /> */}
+                        <MessageInput handleKeyDown={handleKeyDown} messageText={messageText} setMessageText={setMessageText} displayName={friendData.displayName} />
                     </div>
                     {showProfile && <UserSideBar displayName={friendData.displayName} userName={friendData.userName} />}
                 </div>
