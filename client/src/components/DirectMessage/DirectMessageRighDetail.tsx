@@ -1,31 +1,32 @@
 import GroupIcon from '@mui/icons-material/Group';
 import MessageIcon from '@mui/icons-material/Message';
 
-import Friends from './Friends';
 import { useState } from 'react';
-import Addfriend from './Addfriend';
-import { lightBlue } from '@mui/material/colors';
-import PendingRequest from './PendingRequest';
+import Addfriend from '../Channel/Addfriend';
+import Friends from '../Channel/Friends';
+import PendingRequest from '../Channel/PendingRequest';
 
 
 
-export default function DirectMessagePage() {
+export default function DirectMessageRightDetail() {
     const [action, setAction] = useState('all')
     return (
         <div style={{
             flex: "1",
             height: "100%"
         }}>
-            <div>
-                <div style={{
-                    borderBottom: "1px solid rgb(49, 49, 53)",
-                    height: "46px",
-                    fontSize: "15px",
-                }}>
-                    <div className='flex justify-between items-center py-2 px-8'>
+            <div className='flex flex-col h-full'>
+                <div
+                    className='flex items-center'
+                    style={{
+                        borderBottom: "1px solid rgb(49, 49, 53)",
+                        height: "46px",
+                        fontSize: "15px",
+                    }}>
+                    <div className='flex justify-between items-center px-8 w-full'>
                         <div className='flex gap-2 items-center'>
                             <h1 className='flex items-center gap-3'> <GroupIcon /> Friends <span className='text-gray-600'>&#8226;</span></h1>
-                            <div className='action_button flex items-center gap-3'>
+                            <div className='action_button flex items-center gap-5'>
                                 <button
                                     className='rounded-md'
                                     onClick={() => setAction('online')}
@@ -55,7 +56,8 @@ export default function DirectMessagePage() {
                                 style={{
                                     padding: "4px 16px",
                                     backgroundColor: action === 'addFriend' ? "#242640" : '',
-                                    color: action === 'addFriend' ? "#6071CA" : 'white'
+                                    color: action === 'addFriend' ? "#6071CA" : 'white',
+                                    marginLeft: "20px"
                                 }}
                                 className='bg-indigo-500 rounded-md'
                             >Add Friend</button>
@@ -67,7 +69,7 @@ export default function DirectMessagePage() {
                     </div>
                 </div>
                 <div style={{
-                    height: "100%"
+                    flex: "1",
                 }} className='flex'>
                     {action === 'addFriend' && < Addfriend />}
                     {['all', 'online'].includes(action) && <Friends />}
@@ -76,7 +78,6 @@ export default function DirectMessagePage() {
                         style={{
                             backgroundColor: "#202024",
                             width: "23vw",
-                            height: "96vh",
                             padding: "16px",
                             borderLeft: "1px solid rgb(49, 49, 53)",
                         }}

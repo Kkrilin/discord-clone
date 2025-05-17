@@ -1,16 +1,16 @@
 import GroupIcon from '@mui/icons-material/Group';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import { Link } from 'react-router-dom';
 
 
-export default function DirectMessage() {
+export default function DirectMessageLeftList() {
     return (
         <div
             style={{
                 fontSize: "13px",
                 backgroundColor: "#121214",
                 height: "100%"
-                // borderRadius: "20px",
             }}
         >
             <div
@@ -33,7 +33,9 @@ export default function DirectMessage() {
             </div>
             <div className='mx-1 my-3'>
                 <nav className='navbar'>
-                    <h1> <GroupIcon /> Friends</h1>
+                    <Link to='/app/@me'>
+                        <h1> <GroupIcon /> Friends</h1>
+                    </Link>
                     <h1> <ElectricBoltIcon />Nitro</h1>
                     <h1> <StorefrontIcon /> Shop</h1>
                 </nav>

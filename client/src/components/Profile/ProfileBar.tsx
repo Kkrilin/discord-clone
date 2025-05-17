@@ -23,7 +23,7 @@ export default function ProfileBar() {
                     }}>
                         <Avatar sx={{
                             width: "25px",
-                            height: "25px"
+                            height: "20px"
                         }} src={discordImg} />
                     </div>
                     <div>
@@ -31,7 +31,7 @@ export default function ProfileBar() {
                         <h1 className="text-sm">{profileData.userName}</h1>
                     </div>
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center mx-2">
                     <IconButton
                         className="profile_icon"
                     >

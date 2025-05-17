@@ -3,15 +3,20 @@ import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CircularLoader from './components/Loader/CircularLoader';
 import PublicRoute from './components/Utils/PublicRoute';
-import AuthLayout from './layouts/AuthLayout';
 import ProtectedRoute from './components/Utils/ProtectedRoute';
-import AppLayout from './layouts/AppLayout';
+
+// Laout
+import AuthLayout from './components/layouts/AuthLayout';
+import AppLayout from './components/layouts/AppLayout';
+import DirectMessageLayout from './components/layouts/DirectMessageLayout';
+// components
+import DirectMessageRightDetail from './components/DirectMessage/DirectMessageRighDetail';
+import DirectMessage from './components/DirectMessage/DirectMessage';
 
 // pages
-const LandingPage = React.lazy(() => import('./pages/LandingPage'))
-const RegisterPage = React.lazy(() => import('./pages/RegisterPage'))
-const LoginPage = React.lazy(() => import('./pages/LoginPage'))
-const HomePage = React.lazy(() => import('./pages/HomePage'))
+const LandingPage = React.lazy(() => import('./components/pages/LandingPage'))
+const RegisterPage = React.lazy(() => import('./components/pages/RegisterPage'))
+const LoginPage = React.lazy(() => import('./components/pages/LoginPage'))
 
 function App() {
   return (
@@ -24,7 +29,11 @@ function App() {
             <Route path="login" element={<LoginPage />} />
           </Route>
           <Route path='/app' element={<ProtectedRoute redirectedTo='/'> <AppLayout /></ProtectedRoute>} >
-            <Route index element={<HomePage />} />
+            <Route index element={<Navigate to='/app/@me' />} />
+            <Route path='@me' element={<DirectMessageLayout />}>
+              <Route index element={< DirectMessageRightDetail />} />
+              <Route path=':channelId' element={<DirectMessage />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>
