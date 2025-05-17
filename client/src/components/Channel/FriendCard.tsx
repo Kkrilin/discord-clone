@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-export default function FriendCard() {
+export default function FriendCard({ friend }) {
     return (
         <div>
             <div
@@ -23,8 +23,8 @@ export default function FriendCard() {
                     <div className='flex items-center gap-3'>
                         <Avatar />
                         <div>
-                            <h1>name</h1>
-                            <h1>Offline</h1>
+                            <h1>{friend.userName}</h1>
+                            <h1>{friend.displayName}</h1>
                         </div>
                     </div>
                     <div>

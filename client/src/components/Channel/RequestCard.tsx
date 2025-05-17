@@ -1,13 +1,25 @@
 import { Avatar } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
+import axios from 'axios';
+import { getAcceptFrientRequestUrl, requestConfig } from '../../helper/api';
 
 
 type Props = {
     type: string
 }
 
-export default function RequestCard({ type, sender, receive }: Props) {
+export default function RequestCard({ type, sender, receive, frId }: Props) {
+    console.log('sender', sender)
+    console.log('frId', frId)
+
+    const handleAcceptRequest = () => {
+        console.log('accept')
+        // return
+        axios.post(getAcceptFrientRequestUrl(frId), {}, requestConfig)
+            .then((res) => console.log(res.data))
+            .catch((error) => console.log(error))
+    }
     return (
         <div>
             <div
@@ -31,7 +43,7 @@ export default function RequestCard({ type, sender, receive }: Props) {
                     </div>
                     <div>
                         <div className='flex items-center gap-2'>
-                            {type === 'recieve' && <DoneIcon />}
+                            {type === 'recieve' && < DoneIcon onClick={handleAcceptRequest} />}
                             <ClearIcon />
                         </div>
                     </div>

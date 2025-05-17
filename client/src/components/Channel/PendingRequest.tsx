@@ -30,7 +30,7 @@ export default function PendingRequest() {
                 <div className='px-6 py-4'>
                     <h1 className='text-sm'>Received <HorizontalRuleIcon /> {receivedRequest.length}</h1>
                     <div className='py-4'>
-                        {receivedRequest.map((rec) => <RequestCard sender={rec.Sender} type='recieve' />)}
+                        {receivedRequest.map((rec) => <RequestCard sender={rec.Sender} frId={rec.id} type='recieve' />)}
                     </div>
                 </div>
             }
@@ -38,7 +38,7 @@ export default function PendingRequest() {
                 <div className='px-6 py-4'>
                     <h1 className='text-sm'>Sent <HorizontalRuleIcon /> {sentRequest.length}</h1>
                     <div className='py-4'>
-                        {sentRequest.map((sent) => <RequestCard receive={sent.Receiver} type='sent' />)}
+                        {sentRequest.map((sent) => <RequestCard receive={sent.Receiver} frId={sent.id} type='sent' />)}
                     </div>
                 </div>
             }

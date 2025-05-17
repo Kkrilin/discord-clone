@@ -31,3 +31,8 @@ export const userBaseUrl = `${protectedBaseUrl}/user`;
 
 // friend request
 export const sendFriendRequestUrl = `${protectedBaseUrl}/friend-request`;
+export const getAcceptFrientRequestUrl = (id: string) =>
+  `${protectedBaseUrl}/friend-request/${id}/accept`;
+
+
+export const friendBaseUrl = `${protectedBaseUrl}/friends`

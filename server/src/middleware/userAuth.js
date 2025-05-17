@@ -10,7 +10,7 @@ export const validateSignUp = async (req, re, next) => {
     if (!userName || !email || !password) {
       throw new Error(`please send ${!userName || !email || !password}`);
     }
-    const userByName = await UserController.findOneByName(name);
+    const userByName = await UserController.findOneByName(userName);
     if (userByName) {
       throw new Error('Invalid request: userName is already in use');
     }

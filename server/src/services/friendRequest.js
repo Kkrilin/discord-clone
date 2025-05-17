@@ -1,5 +1,6 @@
 import FriendRequestController from '../controllers/friendRequest.js';
 import UserController from '../controllers/user.js';
+import db from '../models/index.js';
 
 export const createFriendRequest = async (req, res, next) => {
   const { requestTo } = req.body;
@@ -40,6 +41,50 @@ export const allRequest = async (req, res, next) => {
     res
       .status(200)
       .json({ success: 1, data: { receivedRequest, sentRequest } });
+  } catch (error) {
+    error.status = 403;
+    next(error);
+  }
+};
+
+export const acceptFriendRequest = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req;
+  try {
+    const friendRequest = await FriendRequestController.findOneById(id);
+
+    if (!friendRequest) {
+      return res
+        .status(404)
+        .json({ success: 0, message: 'Friend request not found' });
+    }
+    const [user1_id, user2_id] = [
+      friendRequest.senderId,
+      friendRequest.receiverId,
+    ].sort();
+
+    friendRequest.status = 'accepted';
+    await friendRequest.save();
+
+    const friend = await db.Friend.create({ user1_id, user2_id });
+
+    res.status(201).json({ success: 1, friend });
+  } catch (error) {
+    error.status = 403;
+    next(error);
+  }
+};
+
+export const rejectFriendRequest = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req;
+  try {
+    const friendRequest = await FriendRequestController.findOneById(id);
+    if (!friendRequest) {
+      throw new Error('request does not exist');
+    }
+    await db.FriendRequest.destroy({ where: { id } });
+    res.status(201).json({ success: 1, message: 'request rejected' });
   } catch (error) {
     error.status = 403;
     next(error);
