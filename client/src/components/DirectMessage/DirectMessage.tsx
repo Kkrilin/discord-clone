@@ -1,32 +1,104 @@
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import VideocamIcon from '@mui/icons-material/Videocam';
-import { Pin, UserPlus, UserRound, UserRoundCheck } from 'lucide-react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton, { Button } from '@mui/material';
-import { useState } from 'react';
+import { Pin, UserPlus, UserRound } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { Avatar } from '@mui/material';
 import Search from '../Channel/Search';
 import { useLocation } from 'react-router-dom';
 import UserSideBar from './UserSideBar';
 import MessageInput from '../Message/MessageInput';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { config } from '../../config';
+import { useParams } from 'react-router-dom';
+import { io, Socket } from 'socket.io-client';
+import { mergeMessagesWithDateAndTime } from '../../helper/utils';
+import axios from 'axios';
+import { getAllDmMessageUrl, requestConfig } from '../../helper/api';
+const { serverBaseUrl } = config
+
+let socket: Socket;
 
 
+export type Messages = {
+    userName: string,
+    content: string,
+    createdAt: string
+}
+
+export type ReduceedMessage = {
+    userName: string,
+    date: string,
+    time: string,
+    contents: string[]
+}
 
 export default function DirectMessage() {
     const [showProfile, setShowProfile] = useState(true)
-    const [messages, setMessages] = useState<string[]>([])
+    const [messages, setMessages] = useState<Messages[]>([])
     const [messageText, setMessageText] = useState('')
+    const profileData = useSelector((state: RootState) => state.profile)
     const location = useLocation()
-    const friendData = location.state?.friendData
-
-
+    const { friendData, isFriend } = location.state
+    console.log(location.state, '11111111')
+    const messageEndRef = useRef<HTMLDivElement>(null)
+    const params = useParams()
+    const token = localStorage.getItem('token');
+    console.log('isFriend', isFriend)
+    console.log('friendData', friendData)
+    useEffect(() => {
+        axios.get(`${getAllDmMessageUrl}/${params.dmId}`, requestConfig)
+            .then((res) => {
+                console.log(res.data.messages)
+                setMessages(res.data.messages)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }, [])
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!messageText.trim()) {
+            return
+        }
+        const messagePayload = {
+            content: messageText,
+            // userName: profileData.userName,
+            // messagerId: profileData.id,
+            createdAt: new Date().toISOString(),
+            directMessageId: params.dmId
+        }
         if (e.key === 'Enter') {
             e.preventDefault()
-            setMessages(prv => [...prv, messageText])
+            socket.emit('chat message', messagePayload);
             setMessageText('')
         }
     }
+    useEffect(() => {
+        if (!token) return;
+        socket = io(serverBaseUrl, {
+            auth: {
+                token,
+            },
+            withCredentials: true,
+        });
+
+        socket.on('connect', () => {
+            console.log('Socket connected');
+        });
+
+        socket.on('chat message', (msg) => {
+            setMessages((prev) => [...prev, msg]);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [token]);
+
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: "instant" })
+    }, [messages])
+
+    const mergedMessages = mergeMessagesWithDateAndTime(messages)
 
     return (
         <div style={{
@@ -69,7 +141,7 @@ export default function DirectMessage() {
                                         <h1 className='text-2xl'>{friendData.userName}</h1>
                                     </div>
                                 </div>
-                                <p className='py-5'>this is the beginning of your direct message history with <strong>{friendData.displayName}</strong>  </p>
+                                <p className='py-5'>this is the beginning of your direct message history with <strong className='capitalize' >{friendData.displayName}</strong>  </p>
                                 <div className='flex items-center'>
                                     <div className='flex items-center'>
                                         <h1 className='flex items-center text-sm text-neutral-400'> 1 Mutual Server</h1>
@@ -82,8 +154,8 @@ export default function DirectMessage() {
                                             marginLeft: "20px",
                                             fontSize: "12px"
                                         }}
-                                        className='bg-indigo-500 rounded-md font-semibold'
-                                    >Add Friend</button>
+                                        className={'bg-indigo-500 rounded-md font-semibold'}
+                                    >{isFriend ? 'Remove Friend' : 'Add Friend'}</button>
                                     <button
                                         style={{
                                             padding: "2px 16px",
@@ -96,8 +168,26 @@ export default function DirectMessage() {
                                 </div>
                             </div>
                             {messages.length > 0 &&
-                                <ul className='px-5'>
-                                    {messages.map((msg) => <li>{msg}</li>)}
+                                <ul style={{ paddingTop: "20px" }} className='flex flex-col gap-5'>
+                                    {mergedMessages.map((msg) => {
+                                        return (
+                                            <div className=' hover:bg-neutral-800'>
+                                                <div className='flex px-5 gap-3 items-start'>
+                                                    <div>
+                                                        <Avatar sx={{ width: "40px", height: "40px", backgroundColor: "pink" }} />
+                                                    </div>
+                                                    <div>
+                                                        <div className='flex gap-2 items-center'>
+                                                            <h1 className='capitalize font-medium '>{msg.userName}</h1>
+                                                            <div className='text-neutral-400 text-sm'> <span>{msg.date}</span>, <span>{msg.time}</span> </div>
+                                                        </div>
+                                                        {msg.contents.map((cont) => <li>{cont}</li>)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                    <div ref={messageEndRef}></div>
                                 </ul>
                             }
                         </div>

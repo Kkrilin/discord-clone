@@ -25,10 +25,14 @@ FriendRequestController.createFriendRequest = async (values) => {
 
 //  find one by recieverId
 
-FriendRequestController.findOneByRevcieverId = async (receiverId) => {
+FriendRequestController.findOneByRevcieverId = async (receiverId, senderId) => {
   const filter = {
     where: {
       receiverId,
+      senderId,
+      status: {
+        [db.Op.in]: ['pending', 'accepted'],
+      },
     },
   };
   return db.FriendRequest.findOne(filter);

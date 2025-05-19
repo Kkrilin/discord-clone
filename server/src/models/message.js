@@ -7,10 +7,10 @@ export default function (sequelize, DataTypes) {
         defaultValue: DataTypes.UUIDV4, // Or DataTypes.UUIDV1
         primaryKey: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // name: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       content: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -27,6 +27,7 @@ export default function (sequelize, DataTypes) {
   Message.associate = (models) => {
     Message.belongsTo(models.User, { foreignKey: 'userId' });
     Message.belongsTo(models.Channel, { foreignKey: 'channelId' });
+    Message.belongsTo(models.DirectMessage, { foreignKey: 'dmId' });
   };
 
   return Message;

@@ -13,9 +13,15 @@ export const createFriendRequest = async (req, res, next) => {
     }
     const existRequest = await FriendRequestController.findOneByRevcieverId(
       recieverUser.id,
+      userId,
     );
     if (existRequest) {
-      throw new Error('friend request already sent');
+      console.log(existRequest.toJSON(), 'sssssssssssssssss');
+      if (existRequest.status === 'pending') {
+        throw new Error('friend request already sent');
+      } else if (existRequest.status === 'accepted') {
+        throw new Error('both are already a friend');
+      }
     }
     const values = {
       receiverId: recieverUser.id,

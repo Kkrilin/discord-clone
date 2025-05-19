@@ -16,16 +16,25 @@ import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 import friendRequestRouter from './routes/friendRequest.js';
 import friendRouter from './routes/friend.js';
+import directMessageRouter from './routes/directMessage.js';
+import messageRouter from './routes/message.js';
+
+// soket
+import { initSocket } from './socket/index.js';
 // import  middleware
 import errorHandler from './middleware/errorHandlers.js';
 import { authenticate } from './middleware/userAuth.js';
 
 const app = express();
 const port = config.serverPort || 3000;
+const corsOptions = {
+  origin: config.clientUrl, // e.g., https://myapp.com
+  credentials: true, // allow cookies to be sent
+};
 const server = createServer(app);
-const io = new Server(server, {
-  connectionStateRecovery: {},
-});
+
+// initailize socket connection
+initSocket(server, corsOptions);
 
 // Handle errors in the transport
 transport.on('error', (error) => {
@@ -45,10 +54,6 @@ app.use((req, res, next) => {
 
 app.use(morgan(config.env === 'development' ? 'dev' : 'combined'));
 
-const corsOptions = {
-  origin: config.clientUrl, // e.g., https://myapp.com
-  credentials: true, // allow cookies to be sent
-};
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -63,11 +68,13 @@ app.use('/api', authenticate);
 app.use('/api/user', userRouter);
 app.use('/api/friend-request', friendRequestRouter);
 app.use('/api/friends', friendRouter);
+app.use('/api/direct-message', directMessageRouter);
+app.use('/api/messages', messageRouter);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
+  res.status(200).json({ success: 1, message: ' server is running' });
 });
 // Middleware to handle "route not found" errors and log them
 app.use((req, res, next) => {
@@ -78,12 +85,6 @@ app.use((req, res, next) => {
 
 // Middleware to handle all other errors and log them
 app.use(errorHandler);
-
-io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-});
 
 server.listen(port, () => {
   logger.info(`server is running on ${port}`);

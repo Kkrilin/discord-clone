@@ -10,8 +10,6 @@ type Props = {
 }
 
 export default function RequestCard({ type, sender, receive, frId }: Props) {
-    console.log('sender', sender)
-    console.log('frId', frId)
 
     const handleAcceptRequest = () => {
         console.log('accept')

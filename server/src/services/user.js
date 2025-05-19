@@ -36,10 +36,10 @@ export const login = async function (req, res, next) {
         const token = jwt.sign({ id: user.id }, config.secretKey, {
           expiresIn: config.jwtExpiration,
         });
-        // res.cookie('jwt', token, {
-        //   maxAge: 24 * 60 * 60 * 1000,
-        //   httpOnly: true,
-        // });
+        res.cookie('jwt', token, {
+          maxAge: 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        });
         delete user.password;
         return res.status(200).json({
           success: 1,

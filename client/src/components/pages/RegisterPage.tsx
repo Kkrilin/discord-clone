@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { days, monthMap, months, years } from '../helper/data'
-import CustomDropDown from '../components/Utils/CustomDropDown'
-import { validatePayload } from '../helper/utils'
-import { RegisterUserPayload } from '../helper/type';
-import { requestConfig, userRegisterUrl } from '../helper/api';
+import { days, monthMap, months, years } from '../../helper/data'
+import CustomDropDown from '../../components/Utils/CustomDropDown'
+import { validatePayload } from '../../helper/utils'
+import { RegisterUserPayload } from '../../helper/type';
+import { requestConfig, userRegisterUrl } from '../../helper/api';
 
 export type DateOfBirth = {
     year: number

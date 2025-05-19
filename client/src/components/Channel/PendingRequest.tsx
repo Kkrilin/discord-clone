@@ -17,8 +17,6 @@ export default function PendingRequest() {
             console.log(error.message)
         }
     }
-    console.log('receivedRequest', receivedRequest)
-    console.log('sentRequest', sentRequest)
     useEffect(() => {
         fetchRequest()
     }, [])

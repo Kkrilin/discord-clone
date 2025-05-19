@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 export default function SearchToAddFriend() {
     const [search, setSearch] = useState('')
     const [error, setError] = useState('')
-
+    const [successMessage, setSuccessMessage] = useState('')
     const sendFriendRequest = async () => {
         const payload = {
             requestTo: search
@@ -16,6 +16,7 @@ export default function SearchToAddFriend() {
             const res = await axios.post(sendFriendRequestUrl, payload, requestConfig)
             console.log(res.data)
             setError('')
+            setSuccessMessage(`FriendRequest sent successfully to ${search}`)
         } catch (error) {
             if (error instanceof AxiosError) {
                 setError(error.response?.data.message)
@@ -67,6 +68,7 @@ export default function SearchToAddFriend() {
                 > Send friend Request</Button>}
             </div>
             {error && < h1 className='text-red-900'>{error}</h1>}
+            {successMessage && < h1 className='text-green-900'>{successMessage}</h1>}
         </div>
     )
 }

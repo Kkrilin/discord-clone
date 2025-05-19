@@ -32,7 +32,7 @@ function App() {
             <Route index element={<Navigate to='/app/@me' />} />
             <Route path='@me' element={<DirectMessageLayout />}>
               <Route index element={< DirectMessageRightDetail />} />
-              <Route path=':channelId' element={<DirectMessage />} />
+              <Route path=':dmId' element={<DirectMessage />} />
             </Route>
           </Route>
         </Routes>

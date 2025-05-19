@@ -1,4 +1,8 @@
-import { DateOfBirth } from "../pages/RegisterPage";
+import {
+  Messages,
+  ReduceedMessage,
+} from "../components/DirectMessage/DirectMessage";
+import { DateOfBirth } from "../components/pages/RegisterPage";
 import { RegisterUserPayload } from "./type";
 
 export const validatePayload = (
@@ -34,4 +38,41 @@ export const validatePayload = (
     throw new Error("password lenght is less than 6");
   }
   return true;
+};
+
+export const mergeMessagesWithDateAndTime = (messages: Messages[]) => {
+  return messages.reduce((acc: ReduceedMessage[], cur: Messages) => {
+    const date = new Date(cur.createdAt)
+      .toLocaleString("en-GB", { timeZone: "UTC" })
+      .split(",")[0];
+    const time = new Date(cur.createdAt).toLocaleTimeString(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    // const second = Math.floor((new Date(cur.createdAt)) / 1000);
+    const message = {
+      userName: cur.userName,
+      date,
+      time,
+      timeStamp: new Date(cur.createdAt),
+      // second,
+      contents: [cur.content],
+    };
+    if (acc[acc.length - 1]) {
+      const previousValue = acc[acc.length - 1];
+      if (
+        previousValue.userName === cur.userName &&
+        previousValue.date === date &&
+        previousValue.time == time
+      ) {
+        previousValue.contents.push(cur.content);
+      } else {
+        acc.push(message);
+      }
+    } else {
+      acc.push(message);
+    }
+    return acc;
+  }, []);
 };

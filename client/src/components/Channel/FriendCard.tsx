@@ -1,8 +1,11 @@
 import { Avatar } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import axios from 'axios';
+import { directMessageUrlBaseUrl, requestConfig } from '../../helper/api';
+import { useNavigate } from 'react-router-dom';
 export default function FriendCard({ friend }) {
+
     return (
         <div>
             <div

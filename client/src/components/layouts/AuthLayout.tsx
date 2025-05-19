@@ -4,7 +4,7 @@ import { Toaster } from 'sonner';
 export default function AuthLayout() {
     return (
         <>
-            <Toaster />
+            <Toaster position='top-center' />
             <Outlet />
         </>
     )
