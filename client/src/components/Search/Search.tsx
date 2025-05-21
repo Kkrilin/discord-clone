@@ -1,5 +1,4 @@
 import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
 import { useState } from 'react';
 
 

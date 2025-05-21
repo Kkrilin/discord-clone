@@ -9,9 +9,11 @@ import ProtectedRoute from './components/Utils/ProtectedRoute';
 import AuthLayout from './components/layouts/AuthLayout';
 import AppLayout from './components/layouts/AppLayout';
 import DirectMessageLayout from './components/layouts/DirectMessageLayout';
+
 // components
 import DirectMessageRightDetail from './components/DirectMessage/DirectMessageRighDetail';
 import DirectMessage from './components/DirectMessage/DirectMessage';
+import ChannelLayout from './components/layouts/ChannelLayout';
 
 // pages
 const LandingPage = React.lazy(() => import('./components/pages/LandingPage'))
@@ -30,6 +32,9 @@ function App() {
           </Route>
           <Route path='/app' element={<ProtectedRoute redirectedTo='/'> <AppLayout /></ProtectedRoute>} >
             <Route index element={<Navigate to='/app/@me' />} />
+            <Route path=':serverId' element={<ChannelLayout />} >
+              <Route path=':channelId' element={<h1>channel</h1>} > </Route>
+            </Route>
             <Route path='@me' element={<DirectMessageLayout />}>
               <Route index element={< DirectMessageRightDetail />} />
               <Route path=':dmId' element={<DirectMessage />} />

@@ -23,7 +23,7 @@ export default function PendingRequest() {
 
     return (
         <div style={{ flex: "1" }}>
-            <FIlterSearch />
+            {(receivedRequest.length > 0 || sentRequest.length > 0) && <FIlterSearch />}
             {receivedRequest.length > 0 &&
                 <div className='px-6 py-4'>
                     <h1 className='text-sm'>Received <HorizontalRuleIcon /> {receivedRequest.length}</h1>
@@ -40,8 +40,8 @@ export default function PendingRequest() {
                     </div>
                 </div>
             }
-            {!sentRequest.length && !receivedRequest.length && <div >
-                <h1 className='text-center my-50 text-neutral-600'>there is now pending request</h1>
+            {!sentRequest.length && !receivedRequest.length && <div className='h-full flex justify-center items-center' >
+                <h1 className='w-100 text-center text-sm my-50 text-neutral-400'>There is no pending friend requests. Click 'Add Friend to send friend request' </h1>
             </div>}
         </div>
     )

@@ -15,6 +15,7 @@ export const allFriend = async (req, res, next) => {
         userName: otherUser.userName,
         displayName: otherUser.displayName,
         avatarUrl: otherUser.avatarUrl,
+        status: otherUser.status,
       };
     });
 

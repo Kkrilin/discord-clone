@@ -34,7 +34,7 @@ export const sendFriendRequestUrl = `${protectedBaseUrl}/friend-request`;
 export const getAcceptFrientRequestUrl = (id: string) =>
   `${protectedBaseUrl}/friend-request/${id}/accept`;
 
-// frienc
+// friend
 export const friendBaseUrl = `${protectedBaseUrl}/friends`;
 
 // directMessage
@@ -42,3 +42,9 @@ export const directMessageUrlBaseUrl = `${protectedBaseUrl}/direct-message`;
 
 // messages
 export const getAllDmMessageUrl = `${protectedBaseUrl}/messages/direct-message`;
+
+// server
+export const chatServerBaseUrl = `${protectedBaseUrl}/servers`;
+
+// channel
+export const channelBaseurl = `${protectedBaseUrl}/channels`;

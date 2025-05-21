@@ -1,13 +1,16 @@
 import { Avatar } from '@mui/material'
-import { MoreVerticalIcon, UserRound, UserRoundCheck } from 'lucide-react'
+import { MoreVerticalIcon, UserRoundCheck } from 'lucide-react'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import CustomAvatar from '../Utils/CustomAvatar';
+import { StatusEnum } from '../../helper/type';
 
 type Props = {
     displayName: string,
-    userName: string
+    userName: string,
+    status: StatusEnum
 }
 
-export default function UserSideBar({ displayName, userName }: Props) {
+export default function UserSideBar({ displayName, userName, status }: Props) {
     return (
         <div
             style={{
@@ -31,7 +34,9 @@ export default function UserSideBar({ displayName, userName }: Props) {
                     }
                     <MoreVerticalIcon style={{ backgroundColor: "#6D1F48", width: "30px", height: "30px", padding: "5px" }} className='rotate-90 rounded-full' />
                 </div>
-                <Avatar sx={{ width: "80px", height: "80px", position: "absolute", bottom: "-30px", left: "16px", backgroundColor: "pink" }} />
+                <div className='border-8 rounded-full border-neutral-900 flex items-center justify-center' style={{ position: "absolute", bottom: "-40px", left: "10px", width: "96px", height: '96px' }}>
+                    <CustomAvatar statusSize={{ width: "16px", height: '16px', }} showStatusSize={{ width: "28px", height: '28px', }} containerSize={{ width: "80px", height: '80px', }} avatarSize={{ width: "40px", height: "40px", }} bgColor='orange' status={status} />
+                </div>
             </div>
             <div style={{
                 background: 'linear-gradient(#5F2543 5%, #624655 80%)',

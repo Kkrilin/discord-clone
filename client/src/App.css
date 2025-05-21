@@ -208,6 +208,50 @@ label {
   background-color: #29292d;
 }
 
+.animate_status_option {
+  animation: option_Ani 0.2s ease-in-out forwards;
+}
+/* .add_friend > input[type="search"] */
+.server_input > input[type="text"] {
+  border: 1px solid rgb(72, 72, 72);
+}
+
+.server_input > input[type="text"]:focus {
+  border-color: rgb(122, 186, 255);
+}
+
+.server_option:hover {
+  background-color: #303036;
+}
+.server_option:hover svg {
+  color: white;
+}
+
+@keyframes createServerAni {
+  from {
+    /* width: 250px;
+    height: 400px; */
+    transform: scale(0.6);
+    /* opacity: 0.7; */
+  }
+  to {
+    /* width: 450px;
+    height: 600px; */
+    transform: scale(1);
+
+    /* opacity: 1; */
+  }
+}
+
+@keyframes option_Ani {
+  from {
+    left: 328px;
+  }
+  to {
+    left: 310px;
+  }
+}
+
 @keyframes show {
   from {
     transform: scale(0.6) rotate(60deg);

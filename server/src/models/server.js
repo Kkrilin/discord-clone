@@ -18,6 +18,8 @@ export default function (sequelize, DataTypes) {
   Server.associate = (models) => {
     Server.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' });
     Server.hasMany(models.Channel, { foreignKey: 'serverId' });
+    Server.hasMany(models.ChannelCategory, { foreignKey: 'serverId' });
+    Server.belongsToMany(models.User, { through: 'UserServerMapping' });
   };
 
   return Server;

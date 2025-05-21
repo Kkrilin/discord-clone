@@ -12,13 +12,14 @@ export default function DirectMessageLeftList() {
                 backgroundColor: "#121214",
                 height: "100%",
                 borderTopLeftRadius: "10px",
+                width: "12rem"
             }}
         >
             <div
                 style={{
                     borderBottom: "1px solid rgb(49, 49, 53)",
                     padding: "6px",
-                    height: "46px"
+                    height: "46px",
                 }}
             >
                 <button
@@ -27,6 +28,8 @@ export default function DirectMessageLeftList() {
                         padding: "6px 18px",
                         backgroundColor: "#222225",
                         borderRadius: "10px",
+                        width: "10.7rem"
+
                     }}
                     type='button'>
                     Find or start a conve...

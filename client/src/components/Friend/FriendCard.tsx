@@ -1,11 +1,9 @@
-import { Avatar } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import axios from 'axios';
-import { directMessageUrlBaseUrl, requestConfig } from '../../helper/api';
-import { useNavigate } from 'react-router-dom';
-export default function FriendCard({ friend }) {
+import CustomAvatar from '../Utils/CustomAvatar';
 
+
+export default function FriendCard({ friend }) {
     return (
         <div>
             <div
@@ -21,7 +19,8 @@ export default function FriendCard({ friend }) {
                     className='friend_card flex justify-between items-center'
                 >
                     <div className='flex items-center gap-3'>
-                        <Avatar />
+                        <CustomAvatar statusSize={{ width: "12px", height: '12px', }} showStatusSize={{ width: "20px", height: '20px', }} containerSize={{ width: "40px", height: '40px', }} avatarSize={{ width: "25px", height: "25px" }} bgColor='orange' status={friend.status} />
+
                         <div>
                             <h1>{friend.userName}</h1>
                             <h1>{friend.displayName}</h1>

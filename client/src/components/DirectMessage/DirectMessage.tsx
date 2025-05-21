@@ -3,7 +3,7 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import { Pin, UserPlus, UserRound } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Avatar } from '@mui/material';
-import Search from '../Channel/Search';
+import Search from '../Search/Search';
 import { useLocation } from 'react-router-dom';
 import UserSideBar from './UserSideBar';
 import MessageInput from '../Message/MessageInput';
@@ -15,6 +15,8 @@ import { io, Socket } from 'socket.io-client';
 import { mergeMessagesWithDateAndTime } from '../../helper/utils';
 import axios from 'axios';
 import { getAllDmMessageUrl, requestConfig } from '../../helper/api';
+import CustomAvatar from '../Utils/CustomAvatar';
+import CircularLoader from '../Loader/CircularLoader';
 const { serverBaseUrl } = config
 
 let socket: Socket;
@@ -37,22 +39,25 @@ export default function DirectMessage() {
     const [showProfile, setShowProfile] = useState(true)
     const [messages, setMessages] = useState<Messages[]>([])
     const [messageText, setMessageText] = useState('')
+    const [loading, setLoading] = useState(false)
     const profileData = useSelector((state: RootState) => state.profile)
     const location = useLocation()
     const { friendData, isFriend } = location.state
-    console.log(location.state, '11111111')
     const messageEndRef = useRef<HTMLDivElement>(null)
     const params = useParams()
     const token = localStorage.getItem('token');
     console.log('isFriend', isFriend)
     console.log('friendData', friendData)
     useEffect(() => {
+        setLoading(true)
         axios.get(`${getAllDmMessageUrl}/${params.dmId}`, requestConfig)
             .then((res) => {
                 console.log(res.data.messages)
                 setMessages(res.data.messages)
             }).catch((error) => {
                 console.log(error)
+            }).finally(() => {
+                setLoading(false)
             })
     }, [])
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -100,6 +105,18 @@ export default function DirectMessage() {
 
     const mergedMessages = mergeMessagesWithDateAndTime(messages)
 
+    if (loading) {
+        <div
+            className='flex justify-center items-center'
+            style={{
+                flex: "1",
+                height: "100%",
+
+            }}>
+            <CircularLoader />
+        </div>
+    }
+
     return (
         <div style={{
             flex: "1",
@@ -115,7 +132,8 @@ export default function DirectMessage() {
                     }}>
                     <div className='flex justify-between items-center px-8 w-full'>
                         <div className='flex gap-2 items-center'>
-                            <Avatar sx={{ width: "25px", height: "25px" }} />
+                            {/* <Avatar sx={{ width: "25px", height: "25px" }} /> */}
+                            <CustomAvatar statusSize={{ width: "8px", height: '8px' }} showStatusSize={{ width: "12px", height: '12px', }} containerSize={{ width: "25px", height: '25px', }} avatarSize={{ width: "16px", height: "16px" }} status={friendData.status} bgColor='orange' />
                             <h1 className='flex items-center gap-3'> {friendData.displayName} </h1>
                         </div>
                         <div className='flex gap-5 items-center'>
@@ -193,7 +211,7 @@ export default function DirectMessage() {
                         </div>
                         <MessageInput handleKeyDown={handleKeyDown} messageText={messageText} setMessageText={setMessageText} displayName={friendData.displayName} />
                     </div>
-                    {showProfile && <UserSideBar displayName={friendData.displayName} userName={friendData.userName} />}
+                    {showProfile && <UserSideBar displayName={friendData.displayName} userName={friendData.userName} status={friendData.status} />}
                 </div>
             </div>
         </div>

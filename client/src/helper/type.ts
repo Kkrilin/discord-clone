@@ -20,3 +20,15 @@ export interface RegisterUserPayload {
   password: string;
   email: string;
 }
+
+export enum StatusEnum {
+  Online = "online",
+  Invisible = "invisible",
+  Idle = "idle",
+  DoNotDisturb = "dnd",
+}
+
+export type Size = {
+  width: string;
+  height: string;
+};

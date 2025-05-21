@@ -33,6 +33,12 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.DATE,
         allowNull: false,
       },
+      status: {
+        type: DataTypes.ENUM,
+        allowNull: false,
+        defaultValue: 'online',
+        values: ['online', 'invisible', 'idle', 'dnd'],
+      },
     },
     {},
   );
@@ -40,8 +46,12 @@ export default function (sequelize, DataTypes) {
   User.associate = (models) => {
     User.hasMany(models.Server, { foreignKey: 'ownerId', as: 'Owner' });
     User.hasMany(models.Message, { foreignKey: 'userId' });
-    User.hasMany(models.FriendRequest, { foreignKey: 'senderId', as: 'Sender' });
-    User.hasMany(models.FriendRequest, { foreignKey: 'receiverId', as: 'Receiver' });
+    User.hasMany(models.FriendRequest, {foreignKey: 'senderId',as: 'Sender'});
+    User.hasMany(models.FriendRequest, {foreignKey: 'receiverId', as: 'Receiver'});
+    User.hasMany(models.Channel, { foreignKey: 'creatorId', as: 'ChannelCreator' });
+    User.hasMany(models.ChannelCategory, { foreignKey: 'creatorId', as: 'ChannelCategoryCreator' });
+    User.belongsToMany(models.Server, { through: 'UserServerMapping' });
+    User.belongsToMany(models.Channel, { through: 'UserChannelMapping' });
   };
   return User;
 }

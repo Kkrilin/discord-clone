@@ -72,6 +72,23 @@ export const getUser = async function (req, res, next) {
   }
 };
 
+export const updateUserStatus = async function (req, res, next) {
+  const { userId } = req;
+  const { status } = req.body;
+  try {
+    const user = await UserController.findOneById(userId);
+    if (!user) {
+      throw new Error('user not found');
+    }
+    user.status = status;
+    await user.save();
+    return res.status(200).json({ success: 1, user });
+  } catch (error) {
+    error.status = 403;
+    next(error);
+  }
+};
+
 // export const updateUser = async function (req, res, next) {
 //   const { userId } = req;
 //   const { email, name } = req.body;

@@ -18,9 +18,12 @@ import friendRequestRouter from './routes/friendRequest.js';
 import friendRouter from './routes/friend.js';
 import directMessageRouter from './routes/directMessage.js';
 import messageRouter from './routes/message.js';
+import serverRouter from './routes/server.js';
+import channelRouter from './routes/channel.js';
 
 // soket
 import { initSocket } from './socket/index.js';
+
 // import  middleware
 import errorHandler from './middleware/errorHandlers.js';
 import { authenticate } from './middleware/userAuth.js';
@@ -70,6 +73,8 @@ app.use('/api/friend-request', friendRequestRouter);
 app.use('/api/friends', friendRouter);
 app.use('/api/direct-message', directMessageRouter);
 app.use('/api/messages', messageRouter);
+app.use('/api/servers', serverRouter);
+app.use('/api/channels', channelRouter);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
