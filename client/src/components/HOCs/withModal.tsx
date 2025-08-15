@@ -22,7 +22,7 @@ const style = {
     // animation: 'createServerAni 0.2s ease-in-out',
 };
 
-const withModal = (WrappedComponene: React.ComponentType<any>) => {
+const withModal = (WrappedComponent: React.ComponentType<any>) => {
 
     return function ModalComponent({ children, ...props }: BasicModalProps) {
         const [open, setOpen] = React.useState(false);
@@ -31,7 +31,11 @@ const withModal = (WrappedComponene: React.ComponentType<any>) => {
 
         return (
             <div>
-                <div onClick={handleOpen}>{children}</div>
+                <div onClick={(e) => {
+                    e.stopPropagation()
+                    handleOpen()
+                }}
+                >{children}</div>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -39,10 +43,10 @@ const withModal = (WrappedComponene: React.ComponentType<any>) => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <WrappedComponene {...props} handleClose={handleClose} />
+                        <WrappedComponent {...props} handleClose={handleClose} />
                     </Box>
                 </Modal>
-            </div>
+            </div >
         );
     }
 }

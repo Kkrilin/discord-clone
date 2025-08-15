@@ -48,3 +48,6 @@ export const chatServerBaseUrl = `${protectedBaseUrl}/servers`;
 
 // channel
 export const channelBaseurl = `${protectedBaseUrl}/channels`;
+
+// channel category
+export const channelCategoryBaseUrl = `${protectedBaseUrl}/channel-categories`;

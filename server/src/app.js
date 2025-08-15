@@ -20,6 +20,7 @@ import directMessageRouter from './routes/directMessage.js';
 import messageRouter from './routes/message.js';
 import serverRouter from './routes/server.js';
 import channelRouter from './routes/channel.js';
+import channelCategoryRouter from './routes/channelCategory.js';
 
 // soket
 import { initSocket } from './socket/index.js';
@@ -75,6 +76,7 @@ app.use('/api/direct-message', directMessageRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api/servers', serverRouter);
 app.use('/api/channels', channelRouter);
+app.use('/api/channel-categories', channelCategoryRouter);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

@@ -14,6 +14,7 @@ import DirectMessageLayout from './components/layouts/DirectMessageLayout';
 import DirectMessageRightDetail from './components/DirectMessage/DirectMessageRighDetail';
 import DirectMessage from './components/DirectMessage/DirectMessage';
 import ChannelLayout from './components/layouts/ChannelLayout';
+import ChannelMessage from './components/Channel/ChannelMessage';
 
 // pages
 const LandingPage = React.lazy(() => import('./components/pages/LandingPage'))
@@ -33,7 +34,7 @@ function App() {
           <Route path='/app' element={<ProtectedRoute redirectedTo='/'> <AppLayout /></ProtectedRoute>} >
             <Route index element={<Navigate to='/app/@me' />} />
             <Route path=':serverId' element={<ChannelLayout />} >
-              <Route path=':channelId' element={<h1>channel</h1>} > </Route>
+              <Route path=':channelId' element={<ChannelMessage />} > </Route>
             </Route>
             <Route path='@me' element={<DirectMessageLayout />}>
               <Route index element={< DirectMessageRightDetail />} />

@@ -22,6 +22,14 @@ ServerController.getOneById = async (ownerId, serverId) => {
       {
         model: db.Channel,
       },
+      {
+        model: db.ChannelCategory,
+        include: [
+          {
+            model: db.Channel,
+          },
+        ],
+      },
     ],
   };
   return db.Server.findOne(filter);

@@ -13,11 +13,25 @@ ChannelController.create = async (values) => {
   return Channel;
 };
 
-ChannelController.getOneById = async (channelId) => {
+ChannelController.getOneById = async (userId, channelId) => {
   const filter = {
     where: {
+      creatorId: userId,
       id: channelId,
     },
+    include:[{
+      model: db.Server,
+      include: [ {
+        model: db.UserServerMapping,
+        include: [
+          {
+            model: db.User,
+            attributes: ['id',  'userName', 'displayName', 'avatarUrl', 'status']
+          }
+        ]
+      }
+      ]
+    }]
   };
   return db.Channel.findOne(filter);
 };

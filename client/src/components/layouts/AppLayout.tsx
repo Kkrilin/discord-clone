@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { requestConfig, userBaseUrl } from '../../helper/api'
 import AppHeader from '../AppHeader/AppHeader'
 import Servers from '../Server/MainNavBarOption'
@@ -12,7 +12,9 @@ import { toast } from 'sonner'
 export default function AppLayout() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [loader, setLoader] = useState(true);
     const fetchUserData = async () => {
+        setLoader(true)
         try {
             const res = await axios.get(userBaseUrl, requestConfig)
             dispatch(setProfileData(res.data.user))
@@ -20,12 +22,20 @@ export default function AppLayout() {
             localStorage.clear()
             toast.error(error.message)
             navigate('/login')
+        } finally {
+            setLoader(false)
         }
     }
+
+
 
     useEffect(() => {
         fetchUserData()
     }, [])
+
+    if (loader) {
+        return <h1>Loading ...........</h1>
+    }
     return (
         <div className="h-lvh flex flex-col">
             <AppHeader />

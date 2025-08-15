@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 type Props = {
     redirectedTo: string;
@@ -8,7 +8,8 @@ type Props = {
 
 
 export default function ProtectedRoute({ redirectedTo = '/', children }: Props) {
-
+    const location = useLocation()
     const isAuthenticated = localStorage.getItem('token')
-    return isAuthenticated ? children : <Navigate to={redirectedTo} />
+    console.log('isAuthenticated', isAuthenticated, location)
+    return isAuthenticated ? <> {children} </> : <Navigate to={redirectedTo} />;
 }

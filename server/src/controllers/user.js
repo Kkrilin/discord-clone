@@ -45,4 +45,13 @@ UserController.registerUser = async (values = {}) => {
   return registeredUser;
 };
 
+// add server to userServerMapping
+
+UserController.creatUserServerMapping = async (serverId) => {
+
+  return db.User.addServer(valserverIdues)
+}
+
+
+
 export default UserController;

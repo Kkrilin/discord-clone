@@ -22,17 +22,17 @@ export const createChannel = async (req, res, next) => {
   }
 };
 
-// export const getAllServer = async (req, res, next) => {
-//   const { userId } = req;
-//   try {
-//     const servers = await ServerController.getAllServer(userId);
-//     if (!servers) {
-//       throw new Error('error while fetching servers');
-//     }
-//     console.log('servers', servers);
-//     return res.status(200).json({ success: 1, servers });
-//   } catch (error) {
-//     error.status = 403;
-//     next(error);
-//   }
-// };
+export const getChannel = async (req, res, next) => {
+  const { userId } = req;
+  const { channelId } = req.params;
+  try {
+    const channel = await ChannelController.getOneById(userId, channelId);
+    if (!channel) {
+      throw new Error('channel not found');
+    }
+    return res.status(200).json({ success: 1, channel });
+  } catch (error) {
+    error.status = 404;
+    next(error);
+  }
+};

@@ -134,7 +134,7 @@ label {
   margin-top: 10px;
 }
 .message_scroll::-webkit-scrollbar-thumb {
-  background-color: white;
+  background-color: rgb(138, 135, 135);
   border-radius: 16px;
 }
 .message_scroll::-webkit-scrollbar-track {

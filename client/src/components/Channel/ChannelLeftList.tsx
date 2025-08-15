@@ -4,15 +4,16 @@ import ServerOptionPopOver from '../Popover/ServerPopOver/ServerOptionPopOver';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { chatServerBaseUrl, requestConfig, serverBaseUrl } from '../../helper/api';
-import MyChannels from './ChannelCards';
+import { chatServerBaseUrl, requestConfig } from '../../helper/api';
+import ChannelCards from './ChannelCards';
+import ChannelCategories from './ChannelCategories';
 
 export default function ChannelLeftList() {
     const [server, setServer] = useState({})
     const [showServerOption, setShowServerOption] = useState(false)
     const navigate = useNavigate()
     const params = useParams()
-    const { Channels: channels = [] } = server
+    const { Channels: channels = [], ChannelCategories: channelCategories = [] } = server
     const { serverId } = params
     console.log('params channel left list', params)
 
@@ -52,15 +53,18 @@ export default function ChannelLeftList() {
                         onClick={() => setShowServerOption(prv => !prv)}
                     >
                         <h1 className='text-sm capitalize font-bold'>
-                            server Name
+                            {server.name}
                         </h1>
                         {showServerOption && <ClearIcon className='text-neutral-600 w-3 h-3' />}
                         {!showServerOption && <KeyboardArrowDownIcon className='text-neutral-600' />}
                     </div>
                 </ServerOptionPopOver>
             </div>
-            <div className='mx-1 my-3'>
-                <MyChannels channels={channels} />
+            <div className='p-2'>
+                <ChannelCards channels={channels} />
+                {channelCategories.length > 0 &&
+                    <ChannelCategories server={server} setServer={setServer} channelCategories={channelCategories} />
+                }
             </div>
         </div>
     )

@@ -37,9 +37,9 @@ export default function DirectMessageLeftList() {
             </div>
             <div className='mx-1 my-3'>
                 <nav className='navbar'>
-                    <Link to='/app/@me'>
+                    {/* <Link to='/app/@me'>
                         <h1> <GroupIcon /> Friends</h1>
-                    </Link>
+                    </Link> */}
                     <h1> <ElectricBoltIcon />Nitro</h1>
                     <h1> <StorefrontIcon /> Shop</h1>
                 </nav>

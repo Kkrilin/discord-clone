@@ -23,7 +23,7 @@ export default function ServerEditOption({ setShowServerOption, setServer, serve
                     <AddCircleIcon className='text-neutral-400' />
                 </div>
             </CreateChannelModal>
-            <CreateChannelCategoryModal>
+            <CreateChannelCategoryModal server={server} setServer={setServer}>
                 <div onClick={() => setShowServerOption(false)} className='cursor-pointer server_option flex justify-between items-center py-2 px-3 rounded-md'>
                     <h1 className='text-sm font-medium'>Create Category</h1>
                     <CreateNewFolderIcon className='text-neutral-400' />

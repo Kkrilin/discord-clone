@@ -3,12 +3,12 @@ import { useState } from "react"
 import { channelBaseurl, requestConfig } from "../../helper/api"
 
 
-export default function CreateChannel({ server, setServer, handleClose }) {
+export default function CreateChannel({ server, setServer, handleClose, channelCategory }) {
     const [channelName, setChannelName] = useState('')
     console.log(server)
     const createChannel = async () => {
         try {
-            const res = await axios.post(`${channelBaseurl}/${server.id}`, { channelName }, requestConfig)
+            const res = await axios.post(`${channelBaseurl}/${server.id}`, { channelName,channelCategory }, requestConfig)
             setServer(prv => {
                 return {
                     ...prv,
@@ -28,6 +28,7 @@ export default function CreateChannel({ server, setServer, handleClose }) {
         <div>
             <div className='flex flex-col gap-3'>
                 <h1 className='text-left text-2xl font-medium'>Create Channel</h1>
+                {channelCategory && <h1 className="text-sm" >in {channelCategory.name}</h1>}
                 {/* <p style={{ fontSize: '14px' }} className='text-left'>channel type</p> */}
             </div>
             <div className='transition-transform' >

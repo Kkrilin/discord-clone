@@ -1,5 +1,5 @@
 import ServerController from '../controllers/server.js';
-
+import UserServerMappingController from '../controllers/userServerMapping.js';
 export const createServer = async (req, res, next) => {
   const { userId } = req;
   const { serverName } = req.body;
@@ -13,6 +13,8 @@ export const createServer = async (req, res, next) => {
     if (!server) {
       throw new Error('error while creating server');
     }
+    await server.addUser(userId);
+    // await createUsersServerMapping(server, [userId]);
     return res.status(200).json({ sucess: 1, server });
   } catch (error) {
     error.status = 403;
@@ -47,5 +49,19 @@ export const getOneServer = async (req, res, next) => {
   } catch (error) {
     error.status = 403;
     next(error);
+  }
+};
+
+export const createUsersServerMapping = async (server, users) => {
+  try {
+    const userIdAndServerIdArrays = users.map((userId) => {
+      return {
+        ServerId: server.id,
+        UserId: userId,
+      };
+    });
+    await UserServerMappingController.create(userIdAndServerIdArrays);
+  } catch (error) {
+    throw error;
   }
 };

@@ -18,11 +18,11 @@ export default function MainNavBarOption({ server, type, setActiveNavbarTab, act
     if (activeNavbarTab === 'server') {
         style.backgroundColor = server && activeSeverTab === server.id ? "rgb(78, 84, 239)" : ''
     }
-    useEffect(() => {
-        if (activeNavbarTab === 'dm') {
-            navigate('@me')
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (activeNavbarTab === 'dm') {
+    //         navigate('@me')
+    //     }
+    // }, [])
 
     const handleMainNabarOptionClick = (navbarType: string, serverId: string) => {
         setActiveNavbarTab(navbarType)
@@ -45,7 +45,7 @@ export default function MainNavBarOption({ server, type, setActiveNavbarTab, act
             <button >
                 {type === 'dm' && <Avatar sx={{ width: "25px", height: "20px" }} src={discordImg} />}
                 {type === 'server' && <h1 className="font-normal"  >{(server.name as string).substring(0, 3)}</h1>}
-                {type === 'add' && <CreateServerModal setServers={setServers} ><AddCircleIcon /></CreateServerModal>}
+                {type === 'add' && <AddCircleIcon />}
                 {type === 'discover' && <ExploreIcon />}
                 {type === 'download' && <VerticalAlignBottomIcon />}
             </button>

@@ -1,8 +1,32 @@
 import { useState } from "react"
+import { requestConfig, channelCategoryBaseUrl } from "../../helper/api"
+import axios from "axios"
 
 
-export default function CreateChannelCategory() {
+export default function CreateChannelCategory({ server, setServer, handleClose }) {
     const [channelCategoryName, setChannelCategoryName] = useState('')
+
+    const createChannelCategory = async () => {
+        try {
+            const res = await axios.post(`${channelCategoryBaseUrl}/${server.id}`, { channelCategoryName }, requestConfig)
+            console.log('server', server)
+            console.log('resqqqqqqqqqq', res.data)
+            setServer(prv => {
+                return {
+                    ...prv,
+                    ChannelCategories: [...prv.ChannelCategories, res.data.channelCategory]
+                }
+            })
+            handleClose()
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const handleCreateChannelCategory = () => {
+        console.log('hi11111111111')
+        createChannelCategory()
+    }
     return (
         <div>
             <div className='flex flex-col gap-3'>
@@ -32,8 +56,8 @@ export default function CreateChannelCategory() {
                     </div>
                 </div>
                 <div className='flex justify-end gap-4 items-center'>
-                    <button>cancel</button>
-                    <button className='bg-indigo-500 py-2 px-6 text-sm rounded-md' >Create Category</button>
+                    <button onClick={handleClose} >cancel</button>
+                    <button onClick={handleCreateChannelCategory} className='bg-indigo-500 py-2 px-6 text-sm rounded-md' >Create Category</button>
                 </div>
             </div>
         </div>

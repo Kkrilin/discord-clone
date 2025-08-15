@@ -100,7 +100,7 @@ export default function DirectMessage() {
     }, [token]);
 
     useEffect(() => {
-        messageEndRef.current?.scrollIntoView({ behavior: "instant" })
+        messageEndRef.current?.scrollIntoView({ behavior: "auto" })
     }, [messages])
 
     const mergedMessages = mergeMessagesWithDateAndTime(messages)
