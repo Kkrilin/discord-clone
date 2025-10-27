@@ -36,7 +36,7 @@ export default function MessageInput({ displayName, messageText, setMessageText,
                 <GifBoxIcon className='w-6' />
                 <Sticker className='w-6' />
                 <EmojisPopOver setMessageText={setMessageText}  >
-                    <Meh className='w-6' />
+                    <Meh className='w-6 cursor-pointer' />
                 </EmojisPopOver>
                 <Gamepad2 className='w-6' />
                 {/* <div>

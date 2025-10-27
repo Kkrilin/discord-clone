@@ -10,7 +10,7 @@ export const initSocket = (server, corsOptions) => {
   socketAuthMiddleware(io);
 
   io.on('connection', (socket) => {
-    console.log('Authenticated socket user:', socket.user.userName);
+    console.log('Authenticated socket user:', socket.user?.userName);
 
     registerChatHandlers(socket, io);
   });

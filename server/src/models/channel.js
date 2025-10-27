@@ -16,12 +16,24 @@ export default function (sequelize, DataTypes) {
   );
 
   Channel.associate = (models) => {
-    Channel.belongsTo(models.User, { foreignKey: 'creatorId', as: 'ChannelCreator' });
+    Channel.belongsTo(models.User, {
+      foreignKey: 'creatorId',
+      as: 'ChannelCreator',
+    });
     Channel.belongsTo(models.Server, { foreignKey: 'serverId' });
     Channel.hasMany(models.Message, { foreignKey: 'channelId' });
-    Channel.belongsTo(models.ChannelCategory, { foreignKey: 'channelCategoryId' });
-    Channel.belongsToMany(models.User, { through: 'UserChannelMapping' });
+    Channel.belongsTo(models.ChannelCategory, {
+      foreignKey: 'channelCategoryId',
+    });
+    Channel.belongsToMany(models.User, {
+      through: 'UserChannelMapping',
+      foreignKey: 'channelId',
+      otherKey: 'userId',
+      as: 'ChannelMembers',
+    });
 
+    //  for include chaining
+    Channel.hasMany(models.UserChannelMapping, { foreignKey: 'channelId' })
   };
 
   return Channel;

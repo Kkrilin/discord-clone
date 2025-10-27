@@ -1,4 +1,5 @@
 import { StatusEnum } from '../../helper/type';
+import CustomAvatar from '../Utils/CustomAvatar';
 
 type Props = {
     displayName: string,
@@ -7,6 +8,8 @@ type Props = {
 }
 
 export default function ChannelSideBar({ channel }: Props) {
+    console.log('qqqqqqqqqqqqqqq', channel)
+    const serverMemeber = channel?.Server?.ServerMembers || []
     return (
         <div
             style={{
@@ -18,6 +21,13 @@ export default function ChannelSideBar({ channel }: Props) {
             }}
             className='flex flex-col'
         >
+            {serverMemeber.map(sm => {
+                return (<>
+                    <CustomAvatar statusSize={{ width: "12px", height: '12px', }} showStatusSize={{ width: "20px", height: '20px', }} containerSize={{ width: "40px", height: '40px', }} avatarSize={{ width: "25px", height: "25px" }} bgColor='#5865F2' status={sm.status} />
+                    <h1>{sm.displayName}</h1>
+                </>
+                )
+            })}
         </div>
     )
 }

@@ -19,19 +19,25 @@ ChannelController.getOneById = async (userId, channelId) => {
       creatorId: userId,
       id: channelId,
     },
-    include:[{
-      model: db.Server,
-      include: [ {
-        model: db.UserServerMapping,
+    include: [
+      {
+        model: db.Server,
         include: [
           {
             model: db.User,
-            attributes: ['id',  'userName', 'displayName', 'avatarUrl', 'status']
-          }
-        ]
-      }
-      ]
-    }]
+            as: 'ServerMembers',
+            attributes: [
+              'id',
+              'userName',
+              'displayName',
+              'avatarUrl',
+              'status',
+            ],
+            through: { attributes: ['role', 'nickname', 'joinedAt'] },
+          },
+        ],
+      },
+    ],
   };
   return db.Channel.findOne(filter);
 };

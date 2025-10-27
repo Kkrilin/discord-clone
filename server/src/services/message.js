@@ -39,7 +39,8 @@ export const getAllMessageByDmId = async (req, res, next) => {
     let messages = await MessageController.findAllMessageByDmId(
       directMessage.id,
     );
-    console.log('ssssssssssssss', messages[0].dataValues);
+    console.log('messages', messages)
+    console.log('ssssssssssssss', messages[0]?.dataValues);
     messages = messages.map((msg) => {
       return {
         ...msg.toJSON(),

@@ -83,6 +83,10 @@ export default function ChannelMessage() {
     useEffect(() => {
         messageEndRef.current?.scrollIntoView({ behavior: "auto" })
     }, [messages])
+
+console.log('channel', channel)
+
+
     return (
         <div style={{
             flex: "1",
