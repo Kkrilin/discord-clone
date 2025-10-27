@@ -44,7 +44,6 @@ export const getOneServer = async (req, res, next) => {
     if (!server) {
       throw new Error('error while fetching servers');
     }
-    console.log('servers', server);
     return res.status(200).json({ success: 1, server });
   } catch (error) {
     error.status = 403;
@@ -65,3 +64,14 @@ export const createUsersServerMapping = async (server, users) => {
     throw error;
   }
 };
+
+export const sendServerInvite = (req, res, next) => {
+  const {userId} = req;
+  const {serverId, invitedToId} = req.params
+
+  try {
+    
+  } catch (error) {
+    
+  }
+}

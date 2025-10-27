@@ -16,7 +16,6 @@ export const createFriendRequest = async (req, res, next) => {
       userId,
     );
     if (existRequest) {
-      console.log(existRequest.toJSON(), 'sssssssssssssssss');
       if (existRequest.status === 'pending') {
         throw new Error('friend request already sent');
       } else if (existRequest.status === 'accepted') {

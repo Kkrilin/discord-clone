@@ -39,6 +39,11 @@ export default function (sequelize, DataTypes) {
         defaultValue: 'online',
         values: ['online', 'invisible', 'idle', 'dnd'],
       },
+      userSettings: {
+        type: DataTypes.JSON,
+        allowNull: false,
+        defaultValue: () => ({}),
+      },
     },
     {},
   );
@@ -46,12 +51,25 @@ export default function (sequelize, DataTypes) {
   User.associate = (models) => {
     User.hasMany(models.Server, { foreignKey: 'ownerId', as: 'Owner' });
     User.hasMany(models.Message, { foreignKey: 'userId' });
-    User.hasMany(models.FriendRequest, {foreignKey: 'senderId',as: 'Sender'});
-    User.hasMany(models.FriendRequest, {foreignKey: 'receiverId', as: 'Receiver'});
-    User.hasMany(models.Channel, { foreignKey: 'creatorId', as: 'ChannelCreator' });
-    User.hasMany(models.ChannelCategory, { foreignKey: 'creatorId', as: 'ChannelCategoryCreator' });
+    User.hasMany(models.FriendRequest, {
+      foreignKey: 'senderId',
+      as: 'Sender',
+    });
+    User.hasMany(models.FriendRequest, {
+      foreignKey: 'receiverId',
+      as: 'Receiver',
+    });
+    User.hasMany(models.Channel, {
+      foreignKey: 'creatorId',
+      as: 'ChannelCreator',
+    });
+    User.hasMany(models.ChannelCategory, {
+      foreignKey: 'creatorId',
+      as: 'ChannelCategoryCreator',
+    });
     User.belongsToMany(models.Server, { through: 'UserServerMapping' });
     User.belongsToMany(models.Channel, { through: 'UserChannelMapping' });
+    User.hasMany(models.UserServerMapping, { foreignKey: 'UserId' });
   };
   return User;
 }

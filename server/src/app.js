@@ -93,6 +93,8 @@ app.use((req, res, next) => {
 // Middleware to handle all other errors and log them
 app.use(errorHandler);
 
-server.listen(port, () => {
-  logger.info(`server is running on ${port}`);
+server.listen(port, '0.0.0.0', () => {
+  logger.info(
+    `server is running on http://10.249.138.198:${port}`,
+  );
 });

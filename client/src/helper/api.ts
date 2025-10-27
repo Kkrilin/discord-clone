@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 export const { serverBaseUrl } = config;
 
 export const requestConfig: AxiosRequestConfig = {
@@ -51,3 +51,9 @@ export const channelBaseurl = `${protectedBaseUrl}/channels`;
 
 // channel category
 export const channelCategoryBaseUrl = `${protectedBaseUrl}/channel-categories`;
+
+// server invite
+export const serverInviteUrl = `${protectedBaseUrl}/servers/invite`;
+
+export const serverInviteFn = (data) =>
+  axios.post(serverInviteUrl, data, requestConfig);

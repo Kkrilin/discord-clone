@@ -20,6 +20,7 @@ export default function (sequelize, DataTypes) {
     Server.hasMany(models.Channel, { foreignKey: 'serverId' });
     Server.hasMany(models.ChannelCategory, { foreignKey: 'serverId' });
     Server.belongsToMany(models.User, { through: 'UserServerMapping' });
+    Server.hasMany(models.UserServerMapping, { foreignKey: 'ServerId' });
   };
 
   return Server;

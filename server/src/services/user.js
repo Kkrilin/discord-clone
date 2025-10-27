@@ -2,6 +2,8 @@ import UserController from '../controllers/user.js';
 import config from '../config/config.js';
 import jwt from 'jsonwebtoken';
 import bycrypt from 'bcrypt';
+import FriendController from '../controllers/friend.js';
+import { Json } from 'sequelize/lib/utils';
 
 export const registerUser = async function (req, res, next) {
   const values = req.body;
@@ -62,10 +64,19 @@ export const getUser = async function (req, res, next) {
   const { userId } = req;
   try {
     const user = await UserController.findOneById(userId);
+    const friends = await FriendController.getAllFriend(userId);
+    const myFriends = [];
+    for (let friend of friends) {
+      if (!friend?.User1.id === userId) {
+        myFriends.push(friend.User1);
+      } else {
+        myFriends.push(friend.User2);
+      }
+    }
     if (!user) {
       throw new Error('user not found');
     }
-    res.status(200).json({ success: 1, user });
+    res.status(200).json({ success: 1, user: { ...user.toJSON(), myFriends } });
   } catch (error) {
     error.status = 403;
     next(error);

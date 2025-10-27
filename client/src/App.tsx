@@ -1,9 +1,11 @@
 import React, { Suspense } from 'react';
+import { Toaster } from "sonner";
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CircularLoader from './components/Loader/CircularLoader';
 import PublicRoute from './components/Utils/PublicRoute';
 import ProtectedRoute from './components/Utils/ProtectedRoute';
+// import {QueryClientProvider, QueryClient} from '@tanstack/react-query'
 
 // Laout
 import AuthLayout from './components/layouts/AuthLayout';
@@ -25,6 +27,7 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={<CircularLoader />}>
+       <Toaster />
         <Routes>
           <Route path='/' element={<PublicRoute redirectedTo='/app'> <AuthLayout /> </PublicRoute>}>
             <Route index element={<LandingPage />} />

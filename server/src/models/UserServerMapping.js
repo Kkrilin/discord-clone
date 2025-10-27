@@ -4,5 +4,10 @@ export default function (sequelize, DataTypes) {
     {},
     { timestamps: false },
   );
+  
+  UserServerMapping.associate = (models) => {
+    UserServerMapping.belongsTo(models.User, { foreignKey: 'UserId' });
+    UserServerMapping.belongsTo(models.Server, { foreignKey: 'ServerId' });
+  };
   return UserServerMapping;
 }
